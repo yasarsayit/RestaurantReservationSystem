@@ -1,0 +1,160 @@
+﻿@{
+    ViewBag.Title = "Reservation List";
+
+}
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Reservation</title>
+    <script src="~/Content/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Scripts/jquery/jquery.js"></script>
+    <script src="~/Scripts/validate.js/validate.js"></script>
+    <script src="~/Scripts/validate.js/validate.min.js"></script>
+    <link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/select2-bootstrap-theme/select2-bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/select2-bootstrap-theme/select2-bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        td, tr {
+            text-align: center;
+        }
+
+        .nav-item {
+            margin-right: 20px;
+        }
+    </style>
+
+    <script src="~/Scripts/jquery/jquery.js"></script>
+    <script>
+    
+        function validatePhoneNumber() {
+            var phone = document.getElementsByName("phone")[0].value;
+
+           
+            if (phone.length !== 11) {
+                alert("Telefon numarası 11 haneli olmalıdır.");
+                return false;  
+            }
+
+            
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <button class="btn btn-light" type="button" onclick="location.href='@Url.Action("Index2","Home")'">Employees</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-light" type="button" onclick="location.href='@Url.Action("Index3","Home")'">Active Customers</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-light" type="button" onclick="location.href='@Url.Action("Reservations","Home")'">Reservations</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-light" type="button" onclick="location.href='@Url.Action("DepartedCustomers","Home")'">Departed Customers</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br />
+    <h1 style="text-align:center">Reservations</h1> <br />
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Phone</th>
+                <th>Number Of People</th>
+                <th>Reservation Time</th>
+                <th>Reservation Status</th>
+                <th>Table ID</th>
+                <th>Employee ID</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (RestaurantManagement1.Models.Reservations reservation in Model)
+            {
+                <tr class="table-info">
+                    <td>@reservation.ReservationID</td>
+                    <td>@reservation.FirstName</td>
+                    <td>@reservation.LastName</td>
+                    <td>@reservation.Phone</td>
+                    <td>@reservation.NumberOfPeople</td>
+                    <td>@reservation.ReservationTime</td>
+                    <td>@reservation.ReservationStatus</td>
+                    <td>@reservation.TableID</td>
+                    <td>@reservation.EmployeeID</td>
+                    <td>
+                        @if (reservation.ReservationStatus == "Active")
+                        {
+                            <form action="@Url.Action("CompleteReservation", "Home")" method="post">
+                                <input type="hidden" name="reservationID" value="@reservation.ReservationID" />
+                                <button type="submit" class="btn btn-primary">Complete</button>
+                            </form>
+                            <form action="@Url.Action("UpdateReservation", "Home")" method="post">
+                                <input type="hidden" name="reservationID" value="@reservation.ReservationID" />
+                                <input type="text" name="name" placeholder="Name" required />
+                                <input type="text" name="surname" placeholder="Surname" required />
+                                <input type="tel" name="phone" placeholder="Phone" required />
+                                <input type="number" name="numberOfPeople" placeholder="Number Of People" required />
+                                <input type="datetime-local" name="reservationTime" placeholder="Reservation Time" required />
+                                <button type="submit" class="btn btn-info">Update</button>
+                            </form>
+                            <form action="@Url.Action("CancelReservation", "Home")" method="post">
+                                <input type="hidden" name="reservationID" value="@reservation.ReservationID" />
+                                <button type="submit" class="btn btn-danger">Cancel</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <text>Completed</text>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="text-center">
+        <form action="@Url.Action("AddReservation", "Home")" method="post" onsubmit="return validatePhoneNumber()">
+            <input type="text" name="name" placeholder="Name" required />
+            <input type="text" name="surname" placeholder="Surname" required />
+            <input type="tel" name="phone" placeholder="Phone" required />
+            <input type="number" name="numberOfPeople" placeholder="Number Of People" required />
+            <input type="datetime-local" name="reservationTime" placeholder="Reservation Time" required />
+            <button type="submit" class="btn btn-success">Add Reservation</button>
+        </form>
+    </div>
+
+</body>
+</html>

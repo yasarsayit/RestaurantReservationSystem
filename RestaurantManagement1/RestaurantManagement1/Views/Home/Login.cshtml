@@ -1,0 +1,80 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <script src="~/Content/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Scripts/jquery/jquery.js"></script>
+    <script src="~/Scripts/validate.js/validate.js"></script>
+    <script src="~/Scripts/validate.js/validate.min.js"></script>
+    <link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/select2-bootstrap-theme/select2-bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/select2-bootstrap-theme/select2-bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        .a {
+            max-width: 400px;
+            max-height: 600 px;
+            margin: auto;
+            position: center;
+            border-block: double, 1px white;
+            position: relative;
+            top: 20px;
+        }
+
+        body {
+            background-image: url("/Content/images/restaurantBack.jpg");
+            background-size: cover;
+        }
+    </style>
+
+
+</head>
+<body>
+    <br />
+    <div class="container">
+        <div class="a">
+            <form method="post" action="/Home/Login">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <input placeholder="Employee Username" required type="text" name="employeeUsername" id="employeeUsername" class="form-control" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-12">
+                        <input placeholder="Employee Password" required type="password" name="employeePassword" id="employeePassword" class="form-control" />
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div style="text-align:center" class="col-lg-12">
+                        <button type="submit" class="btn btn-danger btn-block">Login</button>
+                    </div>
+                </div>
+                <br />
+
+                @if (ViewBag.error != null)
+                {
+                    <div class="row">
+                        <div class="col-lg-12" style="text-align:center">
+                            <h3 style="color:red;background-color:white; border: 1px solid black; display:block">@ViewBag.error</h3>
+                        </div>
+                    </div>
+                }
+            </form>
+            <br />
+
+
+        </div>
+    </div>
+</body>
+</html>

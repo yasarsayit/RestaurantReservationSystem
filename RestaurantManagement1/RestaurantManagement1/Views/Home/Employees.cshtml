@@ -1,0 +1,135 @@
+﻿@model List<RestaurantManagement1.Models.Employees>
+
+@{
+    ViewBag.Title = "Employee List";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Employees</title>
+    <script src="~/Content/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Scripts/jquery/jquery.js"></script>
+    <script src="~/Scripts/validate.js/validate.js"></script>
+    <script src="~/Scripts/validate.js/validate.min.js"></script>
+    <link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/select2-bootstrap-theme/select2-bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/select2-bootstrap-theme/select2-bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        td, tr {
+            text-align: center;
+        }
+
+        .nav-item {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <button class="btn btn-light" type="button" onclick="location.href='@Url.Action("Index2","Home")'">Active Customers</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-light" type="button" onclick="location.href='@Url.Action("Employees","Home")'">Employees</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-light" type="button" onclick="location.href='@Url.Action("Reservations","Home")'">Reservations</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-light" type="button" onclick="location.href='@Url.Action("DepartedCustomers","Home")'">Departed Customers</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br />
+    <h1 style="text-align:center">Employees</h1> <br />
+
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Delete</th>
+                <th>Update</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr class="table-primary">
+                    <td>@employee.EmployeeID</td>
+                    <td>@employee.EmployeeName</td>
+                    <td>@employee.EmployeeSurname</td>
+                    <td>@employee.Role</td>
+                    <td>@employee.EmployeeStatus</td>
+
+                    <td>
+                        <form action="@Url.Action("DeleteEmployee", "Home")" method="post">
+                            <input type="hidden" name="employeeId" value="@employee.EmployeeID" />
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="@Url.Action("UpdateEmployee", "Home")" method="post">
+                            <input type="hidden" name="employeeId" value="@employee.EmployeeID" />
+                            <input type="text" name="newUsername" placeholder="New Username" required />
+                            <input type="password" name="newPassword" placeholder="New Password" required />
+                            <select name="newRole">
+                                <option value="Chef">Chef</option>
+                                <option value="Waiter">Waiter</option>
+                                <option value="Dishwasher">Dishwasher</option>
+                                <option value="Cleaner">Cleaner</option>
+
+                            </select>
+
+
+                            <input type="text" name="newName" placeholder="New Name" required />
+                            <input type="text" name="newSurname" placeholder="New Surname" required />
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-center">
+        <form action="@Url.Action("AddEmployee", "Home")" method="post">
+            <input type="text" name="employeeUsername" placeholder="Username" required />
+            <input type="password" name="employeePasword" placeholder="Password" required />
+            <select name="role">
+                <option value="Chef">Chef</option>
+                <option value="Waiter">Waiter</option>
+                <option value="Dishwasher">Dishwasher</option>
+                <option value="Cleaner">Cleaner</option>
+
+            </select>
+
+            <input type="text" name="employeeName" placeholder="Name" required />
+            <input type="text" name="employeeSurname" placeholder="Surname" required />
+            <input type="text" name="employeeStatus" placeholder="Status" required />
+            <button type="submit" class="btn btn-success">Add Employee</button>
+
+        </form>
+    </div>
+
+
+</body>
+
+</html>

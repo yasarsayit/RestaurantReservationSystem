@@ -1,0 +1,18 @@
+{
+  "version": "3.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "validate.js@0.13.1",
+      "destination": "Scripts/validate.js/"
+    },
+    {
+      "library": "jquery@3.7.1",
+      "destination": "Scripts/jquery/"
+    },
+    {
+      "library": "bootstrap@5.3.3",
+      "destination": "Content/bootstrap/"
+    }
+  ]
+}

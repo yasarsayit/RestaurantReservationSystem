@@ -1,0 +1,85 @@
+﻿@model List<RestaurantManagement1.Models.DepartedCustomers>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DepartedCustomers</title>
+    <script src="~/Content/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Scripts/jquery/jquery.js"></script>
+    <script src="~/Scripts/validate.js/validate.js"></script>
+    <script src="~/Scripts/validate.js/validate.min.js"></script>
+    <link href="~/Content/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/select2-bootstrap-theme/select2-bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/select2-bootstrap-theme/select2-bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        td, tr {
+            text-align: center;
+        }
+
+        .nav-item {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <button class="btn btn-light" type="button" onclick="location.href='@Url.Action("Index2","Home")'">Employees</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-light" type="button" onclick="location.href='@Url.Action("Index3","Home")'">Active Customers</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-light" type="button" onclick="location.href='@Url.Action("Reservations","Home")'">Reservations</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-light" type="button" onclick="location.href='@Url.Action("DepartedCustomers","Home")'">Departed Customers</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br />
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <h1 style="text-align:center">Departed Customers</h1> <br />
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Customer ID</th>
+                <th>Reservation ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var departed in Model)
+            {
+                <tr class="table-success">
+                    <td>@departed.DepartedCustomerID</td>
+                    <td>@departed.ReservationID</td>
+                    <td>@departed.FirstName</td>
+                    <td>@departed.LastName</td>
+                    <td>@departed.Phone</td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+</body>
+</html>
